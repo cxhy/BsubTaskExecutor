@@ -1,6 +1,17 @@
 # BsubTaskExecutor Class Documentation
 ## Overview
-`BsubTaskExecutor` is a Python class designed for managing and executing parallel tasks, particularly useful in environments where batch job submissions are handled via commands like bsub. This class automates the process of loading tasks, submitting them, monitoring their status, and handling timeouts or failures.
+
+`BsubTaskExecutor` is a powerful and flexible Python module designed for developers and system administrators who need to manage and schedule tasks in LSF (Load Sharing Facility) environments. By leveraging the LSF system's bsub and bkill commands, this class provides a robust framework for automating task submissions, monitoring, and management with an emphasis on handling parallel executions efficiently.
+
+This module simplifies the complexities associated with direct LSF job handling by providing a high-level interface that automates:
+
+Task Submission: Automatically submits jobs to the LSF queue using the provided command specifications.
+Concurrency Control: Manages the concurrency level of job execution according to user-defined limits, ensuring optimal resource utilization without overloading the system.
+Real-Time Monitoring: Continuously monitors the status of submitted jobs, capturing updates and dynamically adjusting the task handling as needed.
+Error and Timeout Handling: Proactively manages jobs that fail or exceed their runtime thresholds, with capabilities to retry or terminate tasks as configured.
+Ideal for applications ranging from simple batch processing to complex data processing workflows, `BsubTaskExecutor` enhances productivity and reliability in job scheduling on LSF platforms. Whether integrating into data science pipelines, automation scripts, or backend services, this module provides a scalable solution to meet the demands of modern computational tasks.
+
+
 
 ## Features
 1. Task Management: Load and manage execution tasks from a JSON file.
@@ -21,7 +32,7 @@ No special installation steps are required beyond the basic Python setup. Ensure
 
 ## Usage
 Initialization
-To use the BsubTaskExecutor, you must initialize it with a path to a JSON file containing the tasks to be executed. Optionally, you can specify the maximum number of parallel tasks and a logger for error logging.
+To use the `BsubTaskExecutor`, you must initialize it with a path to a JSON file containing the tasks to be executed. Optionally, you can specify the maximum number of parallel tasks and a logger for error logging.
 
 ```python
     from BsubTaskExecutor import BsubTaskExecutor
@@ -69,3 +80,11 @@ The executor will manage task statuses internally and can use the provided logge
 * Tasks Not Completing: Verify the tc values are sufficient for tasks to complete.
 * Logging Issues: Ensure the logger is correctly initialized and configured.
 For any other issues or detailed usage questions, refer to the source code or contact the support team.
+
+## License
+`BsubTaskExecutor` is licensed under the GNU General Public License v3.0 (GPL-3.0), which ensures that the software remains free for all its users. This license permits users to run, study, share, and modify the software while ensuring that all copies and derivatives remain free as well.
+
+For more details on the GPL-3.0 license, please visit [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html).
+
+By integrating `BsubTaskExecutor` in your projects, you agree to comply with the terms and conditions of GPL-3.0.
+
