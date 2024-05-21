@@ -56,6 +56,7 @@ class BsubTaskExecutor:
 
     def submit_task(self,task):
         command = task[0]
+        self.logger.info(f"submit task : {command}")
         try:
             result = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             jobid = result.stdout.read().decode().strip()
@@ -98,11 +99,14 @@ class BsubTaskExecutor:
         return self.task_timeouts.get(task)
 
     def monitor_tasks(self):
+        self.logger.info(f"Enter monitor_tasks")
         running_task = {}
         while self.tasks or running_task:
             self.update_tasks_status(running_task)
+            self.print_task_statistics()
             for task, jobid in list(running_task.items()):
                 status = self.task_status[task]
+                self.logger.debug(f"check task : {task} with jobid {jobid} at status : {status}")
                 if status == 'RUN':
                     self.task_cnt[task] += 1
                     if self.task_cnt[task] > self.get_task_timeout(task):
@@ -127,8 +131,16 @@ class BsubTaskExecutor:
     def run(self):
         return self.monitor_tasks()
 
-
-
+    def print_task_statistics(self):
+        total_cases = len(self.tasks) + sum(self.task_cnt.values())
+        submitted_cases = sum(self.task_cnt.values())
+        completed_cases = sum(1 for status in self.task_status.values() if status == 'DONE')
+        pending_cases = total_cases - submitted_cases
+        if self.logger:
+            self.logger.info(f"Total cases: {total_cases}")
+            self.logger.info(f"Submitted cases: {submitted_cases}")
+            self.logger.info(f"Completed cases: {completed_cases}")
+            self.logger.info(f"Pending cases: {pending_cases}")
 
 def main():
     pass
